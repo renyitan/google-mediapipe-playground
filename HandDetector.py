@@ -5,7 +5,8 @@ import time
 # webcam constants
 WEBCAM_1, WEBCAM_2, WEBCAM_3 = 0, 1, 2
 
-class handDetector():
+
+class HandDetector():
     def __init__(self, mode=False, max_num_hands=2,
                  detection_confidence=0.5, tracking_confidence=0.5
                  ):
@@ -26,6 +27,7 @@ class handDetector():
     def find_hands(self, image, draw=True):
         # convert to RGB
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
 
         self.results = self.hands.process(image_rgb)
 
@@ -64,7 +66,7 @@ def main():
     # activate webcam
     video_capture = cv2.VideoCapture(WEBCAM_1)
 
-    hand_detector = handDetector()
+    hand_detector = HandDetector()
 
     while True:
         success, image = video_capture.read()

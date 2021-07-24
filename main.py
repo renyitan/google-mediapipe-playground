@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
-import handDetector as detector
+import HandDetector as detector
 
 # activate webcam
 WEBCAM_1, WEBCAM_2, WEBCAM_3 = 0, 1, 2
