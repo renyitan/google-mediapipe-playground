@@ -5,7 +5,6 @@ import time
 # webcam constants
 WEBCAM_1, WEBCAM_2, WEBCAM_3 = 0, 1, 2
 
-
 class handDetector():
     def __init__(self, mode=False, max_num_hands=2,
                  detection_confidence=0.5, tracking_confidence=0.5
