@@ -26,12 +26,10 @@ handDetector = handDetector.HandDetector(detection_confidence=0.7)
 
 # initialise pycaw audio utilities
 devices = AudioUtilities.GetSpeakers()
-interface = devices.Activate(
-    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 MIN_VOLUME, MAX_VOLUME, STEP = volume.GetVolumeRange()
-
-# volume.SetMasterVolumeLevel(-20.0, None)
+mapped_volume = 0
 
 while True:
     success, image = video_capture.read()
@@ -52,7 +50,7 @@ while True:
         # draw circle tracker between index and thumb
         cv2.circle(image, (center_x, center_y), TRACKER_RADIUS, TRACKER_COLOR, cv2.FILLED)
 
-        # determine length of line
+        # determine length of line between thumb and index finger
         line_length = math.hypot(thumb_tip_x - index_finger_tip_x, thumb_tip_y - index_finger_tip_y)
         print(line_length)
         # map line length to volume range
