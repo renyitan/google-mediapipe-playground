@@ -1,12 +1,12 @@
 import cv2
 import mediapipe as mp
-import time
+from google.protobuf.json_format import MessageToDict
 
 # webcam constants
 WEBCAM_1, WEBCAM_2, WEBCAM_3 = 0, 1, 2
 
 
-class HandDetector():
+class HandDetector:
     def __init__(self, mode=False, max_num_hands=2,
                  detection_confidence=0.5, tracking_confidence=0.5
                  ):
@@ -27,7 +27,6 @@ class HandDetector():
     def find_hands(self, image, draw=True):
         # convert to RGB
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
 
         self.results = self.hands.process(image_rgb)
 
@@ -60,6 +59,25 @@ class HandDetector():
                     cv2.circle(image, (center_x, center_y), 5, (255, 0, 255), cv2.FILLED)
 
         return landmarks
+
+    # determines if left or right hand (in mirrored)
+    # if camera is flipped, and you raise "right" hand, it will return "left"
+    def find_handedness(self, image):
+        # convert to dict
+        handedness = []
+
+        if self.results.multi_handedness:
+
+            for id, hand_handedness in enumerate(self.results.multi_handedness):
+                handedness_dict = MessageToDict(hand_handedness)
+
+        return handedness_dict['classification']
+
+    # mirrored_handedness = self.results.multi_handedness.label
+    # if mirrored_handedness == "Right":
+    #     return "left"
+    # elif mirrored_handedness == "Left":
+    #     return "right"
 
 
 def main():

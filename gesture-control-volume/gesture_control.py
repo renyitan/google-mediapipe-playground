@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
-import HandDetector as handDetector
 import math
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from detectors.HandDectector import HandDetector as HandDetector
 
 # image constants
 WEBCAM_1, WEBCAM_2, WEBCAM_3 = 0, 1, 2
@@ -22,7 +22,7 @@ video_capture.set(3, SCREEN_WIDTH)
 video_capture.set(4, SCREEN_HEIGHT)
 
 # initialise hand detector class
-handDetector = handDetector.HandDetector(detection_confidence=0.7)
+handDetector = HandDetector.HandDetector(detection_confidence=0.7)
 
 # initialise pycaw audio utilities
 devices = AudioUtilities.GetSpeakers()
